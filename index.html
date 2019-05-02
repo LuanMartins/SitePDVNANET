@@ -53,25 +53,34 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">Sign Up Modal</h5>
+            <h5 id="exampleModalLabel" class="modal-title">Aguardamos seu contato</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
           </div>
           <div class="modal-body">
             <form id="signupform" action="#">
               <div class="form-group">
-                <label for="fullname">Full Name</label>
-                <input type="text" name="fullname" placeholder="Full Name" id="fullname">
+                <label for="idnomecompleto">Nome Completo</label>
+                <input type="text" name="nomecompleto" placeholder="Nome Completo" id="idnomecompleto">
               </div>
               <div class="form-group">
-                <label for="username">User Name</label>
-                <input type="text" name="username" placeholder="User Name" id="username">
+                <label for="email">Seu E-mail</label>
+                <input type="text" name="email" placeholder="Seu E-mail" id="idemail">
               </div>
               <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="text" name="email" placeholder="Email Address" id="email">
+                <label for="idtelefone">Telefone</label>
+                <input type="text" name="telefone" placeholder="Telefone" id="idtelefone">
               </div>
               <div class="form-group">
-                <button type="submit" class="submit btn btn-primary btn-shadow btn-gradient">Signup</button>
+                <label for="idplano">Escolha seu plano</label>
+                <select name="plano" placeholder="Planos" id="idplano" class="form-control">
+                  <option value="1">Básico</option>
+                  <option value="2">Intermediario</option>
+                  <option value="3">Completo</option>
+                  <option value="3">Premium</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="submit btn btn-primary btn-shadow btn-gradient">Enviar</button>
               </div>
             </form>
           </div>
@@ -82,9 +91,12 @@
       <div class="container">
         <div class="row d-flex">
           <div class="col-lg-6 text order-2 order-lg-1">
-            <h1>Landy &mdash; Bootstrap&nbsp;4 landing page</h1>
-            <p class="hero-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
-            <div class="CTA"><a href="#features" class="btn btn-primary btn-shadow btn-gradient link-scroll">Discover More</a><a href="#" class="btn btn-outline-primary">Sign Up Now</a></div>
+            <h1>Emissor de Nota Fiscal Eletrônica NF-e e NFC-e On-Line </h1>
+            <p class="hero-text">Plataforma WEB para geração emissão do danfe, envio para seu cliente e armazenamento de XML</p>
+            <div class="CTA">
+              <a href="#features" class="btn btn-primary btn-shadow btn-gradient link-scroll">Nossos Planos</a>
+              <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Contate-nos</a>
+            </div>
           </div>
           <div class="col-lg-6 order-1 order-lg-2"><img src="img/Macbook.png" alt="..." class="img-fluid"></div>
         </div>
