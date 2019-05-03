@@ -126,7 +126,7 @@ body {
     height: 215px;
 }
 .card .name {
-    font-size: 22px;
+    font-size: 40px;
     line-height: 28px;
     margin: 10px 0 0;
     text-align: center;
@@ -316,4 +316,9 @@ body {
         z-index: 5;
         visibility: visible;
     }
+}
+.color{
+    background-color: #429244 !important;
+    width: auto;
+    height: 50px;
 }
