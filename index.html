@@ -295,7 +295,7 @@
           <div class="image col-lg-6 order-1 order-lg-2"><img src="img/feature-3.png" alt="..." class="img-fluid"></div>
         </div>
       </div>
-    </section>
+    </section>-->
     <section id="extra-features" class="extra-features bg-primary">
       <div class="container text-center">
         <header>
@@ -332,7 +332,7 @@
         </div>
       </div>
     </section>
-    <section id="testimonials" class="testimonials">
+    <!--<section id="testimonials" class="testimonials">
       <div class="container">
         <header class="text-center no-margin-bottom">   
           <h2>Happy Clients</h2>
@@ -475,15 +475,41 @@
       r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
       ga('create','UA-XXXXX-X');ga('send','pageview');
 
-      function semParametros(){
+      function verificaCamposEmBranco(nome,email,telefone){
+          var campos = [];
+
+          if(nome == null || nome == ''){
+              campos.push('Campo nome está em branco, por favor preencha-o \n');
+          }else if(email == null || email == ''){
+              campos.push('Campo E-mail está em branco, por favor preencha-o \n');
+          }else if(telefone == null || telefone == ''){
+              campos.push('Campo Telefone está em branco, por favor preencha-o \n');
+          }
+
+            return campos;
+      }
+
+      function error(resposta){
         var options = {
             title: 'Error',
-            text: 'wqywyqiy',
+            text: 'Ops! Algo aconteceu: '+resposta,
             type: 'error',
             ConfirmButtontext: 'Cool'
         }
 
         return options;
+      }
+
+      function sucesso(){
+          var options = {
+              title: 'Sucesso',
+              text: 'Sua mensagem foi enviada com sucesso!',
+              type: 'success',
+              ConfirmButtontext: false,
+              timer: 1500
+          }
+
+          return options;
       }
 
       function comParametros(mensagem){
@@ -506,9 +532,37 @@
           var telefone = $("#idtelefone").val();
           var plano = $("#idplano").val();
 
-          $.post( "email/planos.php", function( data ) {
-              sweetAlert(comParametros(data));
-          });
+          var aux = [];
+
+          var validaCampos = verificaCamposEmBranco(nome,email,telefone);
+
+          if(validaCampos.length == 0) {
+              $.ajax( {
+                  type: 'POST',
+                  url: './email/planos.php',
+                  dataType: 'html',
+                  data : {nome: nome, email: email, telefone: telefone, plano: plano},
+
+                  success: function (data) {
+                      if(data == '1') {
+                          sweetAlert(sucesso());
+                         $("#exampleModal").modal('toggle');
+                      }else{
+                          sweetAlert(error(data));
+                      }
+                  }
+              });
+          }else{
+              sweetAlert({
+                  title: 'Alguns campos não foram preenchidos',
+                  text : $.each(validaCampos,function (chave,  values) {
+                      return values;
+                  }),
+                  type : 'error',
+                  showConfirmButton: true,
+                  //timer: 1500
+              });
+          }
       });
     </script>
   </body>
