@@ -116,10 +116,25 @@
                 <label for="email">Seu E-mail</label>
                 <input type="text" name="emailParceria" placeholder="Seu E-mail" id="idemailParceria" required>
               </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="email">Cidade</label>
+                    <input type="text" name="cidadeParceria" placeholder="Cidade" id="idCidadeParceria" required>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="email">UF</label>
+                    <input type="text" name="ufParceria" placeholder="UF" id="idUfParceria" required>
+                  </div>
+                </div>
+              </div>
               <div class="form-group">
                 <label for="idtelefone">Telefone</label>
                 <input type="text" name="telefoneParceria" placeholder="Telefone" id="idtelefoneParceria" class="fone">
               </div>
+              <input type="hidden" name="eParceria" value="parceria"></form>
               <div class="form-group">
                 <button type="button" id="enviarplanoParceria" class="submit btn btn-primary btn-shadow btn-gradient">Enviar</button>
               </div>
@@ -426,10 +441,23 @@
         <p class="lead">Gostariamos de saber um pouco mais sobre você, fala com a gente!</p>
         <div class="form-holder">
           <form id="newsletterForm" action="#">
-            <div class="form-group">
-              <input type="text" name="nomeContato" id="nomeContatoId" placeholder="Nome Completo">
-              <input type="text" name="telefonecontato" id="telefonecontatoid" placeholder="Telefone ou Celular">
-              <input type="email" name="email" id="email" placeholder="Seu E-mail">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <input type="text" name="nomeContato" id="nomeContatoId" placeholder="Nome Completo">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <input type="text" name="telefoneContato" id="telefoneContatoId" class="fone" placeholder="Telefone">
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="col-md-12">
+              <div class="form-group">
+                <input type="text" name="emailContato" id="emailContatoId" placeholder="Email">
+              </div>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-gradient submit">Subscribe</button>
