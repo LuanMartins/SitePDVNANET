@@ -439,28 +439,29 @@
       <div class="container text-center">
         <h2>Fale conosco</h2>
         <p class="lead">Gostariamos de saber um pouco mais sobre você, fala com a gente!</p>
+        <div id="targetcontato"></div>
         <div class="form-holder">
-          <form id="newsletterForm" action="#">
+          <form id="newsletterForm" action="">
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
-                  <input type="text" name="nomeContato" id="nomeContatoId" placeholder="Nome Completo">
+                  <input type="text" name="nomeContato" id="nomeContato" placeholder="Nome Completo">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <input type="text" name="telefoneContato" id="telefoneContatoId" class="fone" placeholder="Telefone">
+                  <input type="text" name="telefoneContato" id="telefoneContato" class="fone" placeholder="Telefone">
                 </div>
               </div>
             </div>
             <br>
             <div class="col-md-12">
               <div class="form-group">
-                <input type="text" name="emailContato" id="emailContatoId" placeholder="Email">
+                <input type="text" name="emailContato" id="emailContato" placeholder="Email">
               </div>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-gradient submit">Subscribe</button>
+                <button type="submit" class="btn btn-primary btn-gradient submit" id="enviarContatoSimples">Subscribe</button>
             </div>
           </form>
         </div>
@@ -570,6 +571,7 @@
           position: 'absolute' // Element positioning
       };
       var target = document.getElementById('target');
+      var targetContato = document.getElementById('targetcontato');
       var spinner = new Spinner(opts);
 
       function verificaCamposEmBranco(nome,email,telefone){
@@ -628,8 +630,15 @@
           //$("#idplano").val('');
 
       }
+      function limparCamposContato(){
+          $("#nomeContato").val('');
+          $("#emailContato").val('');
+          $("#telefoneContato").val('');
+          //$("#idplano").val('');
 
-      $('#enviarplano').click(function(){
+      }
+
+      $('#enviarplano').click(function() {
           // variaveis do formulario
 
           var nome = $("#idnomecompleto").val();
@@ -639,27 +648,75 @@
 
           var aux = [];
 
-          var validaCampos = verificaCamposEmBranco(nome,email,telefone);
+          var validaCampos = verificaCamposEmBranco(nome, email, telefone);
 
-          if(validaCampos.length == 0) {
+          if (validaCampos.length == 0) {
               spinner.spin(target);
-              $("#enviarplano").prop('disabled',true);
-              $.ajax( {
+              $("#enviarplano").prop('disabled', true);
+              $.ajax({
                   type: 'POST',
                   url: './email/planos.php',
                   dataType: 'html',
-                  data : {nome: nome, email: email, telefone: telefone, plano: plano},
+                  data: {nome: nome, email: email, telefone: telefone, plano: plano},
+
+                  success: function (data) {
+                      if (data == '1') {
+                          spinner.stop();
+                          sweetAlert(sucesso());
+                          limparCampos();
+                          $("#enviarplano").prop('disabled', false);
+                          $("#exampleModal").modal('toggle');
+                      } else {
+                          spinner.stop();
+                          $("#enviarplano").prop('disabled', false);
+                          sweetAlert(error(data));
+                      }
+                  }
+              });
+          } else {
+              sweetAlert({
+                  title: 'Alguns campos não foram preenchidos',
+                  text: $.each(validaCampos, function (chave, values) {
+                      return values;
+                  }),
+                  type: 'error',
+                  showConfirmButton: true,
+                  //timer: 1500
+              });
+          }
+      });
+
+      $('#enviarContatoSimples').click(function(){
+          // variaveis do formulario
+
+          var nome = $("#nomeContato").val();
+          var email = $("#emailContato").val();
+          var telefone = $("#telefoneContato").val();
+          //var plano = $("#planoContato").val();
+
+          var aux = [];
+
+          var validaCampos = verificaCamposEmBranco(nome,email,telefone);
+
+          if(validaCampos.length == 0) {
+              spinner.spin(targetContato);
+              $("#enviarContatoSimples").prop('disabled',true);
+              $.ajax( {
+                  type: 'POST',
+                  url: './email/contato.php',
+                  dataType: 'html',
+                  data : {nome: nome, email: email, telefone: telefone},
 
                   success: function (data) {
                       if(data == '1') {
                           spinner.stop();
                           sweetAlert(sucesso());
-                          limparCampos();
-                          $("#enviarplano").prop('disabled',false);
-                         $("#exampleModal").modal('toggle');
+                          limparCamposContato();
+                          $("#enviarContatoSimples").prop('disabled',false);
+                         //$("#exampleModal1").modal('toggle');
                       }else{
                           spinner.stop();
-                          $("#enviarplano").prop('disabled',false);
+                          $("#enviarContatoSimples").prop('disabled',false);
                           sweetAlert(error(data));
                       }
                   }
@@ -675,7 +732,7 @@
                   //timer: 1500
               });
           }
-          //limparCampos();
+
       });
     </script>
   </body>
