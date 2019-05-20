@@ -98,7 +98,7 @@
       </div>
     </div>
     <!-- Modal-->
-    <div id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade">
+    <div id="exampleModalparceria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade">
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -106,43 +106,43 @@
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
           </div>
           <div class="modal-body">
-            <div id="target"></div>
+            <div id="targetparceria"></div>
             <form id="signupform" action="#">
               <div class="form-group">
-                <label for="idnomecompleto">Nome Completo</label>
+                <label for="idnomecompletoParceria">Nome Completo</label>
                 <input type="text" name="nomecompletoParceria" placeholder="Nome Completo" id="idnomecompletoParceria" required>
               </div>
               <div class="form-group">
-                <label for="email">Seu E-mail</label>
+                <label for="idCidadeParceria">Seu E-mail</label>
                 <input type="text" name="emailParceria" placeholder="Seu E-mail" id="idemailParceria" required>
               </div>
               <div class="row">
                 <div class="col-md-8">
                   <div class="form-group">
-                    <label for="email">Cidade</label>
+                    <label for="idCidadeParceria">Cidade</label>
                     <input type="text" name="cidadeParceria" placeholder="Cidade" id="idCidadeParceria" required>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
-                    <label for="email">UF</label>
-                    <input type="text" name="ufParceria" placeholder="UF" id="idUfParceria" required>
+                    <label for="idUfParceria">UF</label>
+                    <input type="text" name="ufParceria" placeholder="UF" id="idUfParceria" minlength="2" maxlength="2" required>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="idtelefone">Telefone</label>
+                <label for="idtelefoneParceria">Telefone</label>
                 <input type="text" name="telefoneParceria" placeholder="Telefone" id="idtelefoneParceria" class="fone">
               </div>
-              <input type="hidden" name="eParceria" value="parceria"></form>
               <div class="form-group">
-                <button type="button" id="enviarplanoParceria" class="submit btn btn-primary btn-shadow btn-gradient">Enviar</button>
+                <button type="button" id="enviarContatoParceria" class="submit btn btn-primary btn-shadow btn-gradient">Enviar</button>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+
     <section id="hero" class="hero hero-home bg-gray">
       <div class="container">
         <div class="row d-flex">
@@ -348,7 +348,7 @@
           <header>
             <div class="row">
               <p class="lead col-lg-8 mx-auto">Agora, você só precisa clicar no botão e preencher os campos requisitados com os seus dados e clicar em enviar para tornar-se nosso parceiro.</p>
-              <p class="lead col-lg-8 mx-auto"><a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal1" style="margin-bottom: 3px;">Parceria</a></p>
+              <p class="lead col-lg-8 mx-auto"><a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalparceria" style="margin-bottom: 3px;">Parceria</a></p>
             </div>
           </header>
         </div>
@@ -572,6 +572,7 @@
       };
       var target = document.getElementById('target');
       var targetContato = document.getElementById('targetcontato');
+      var targetParceria = document.getElementById('targetparceria');
       var spinner = new Spinner(opts);
 
       function verificaCamposEmBranco(nome,email,telefone){
@@ -586,6 +587,24 @@
           }
 
             return campos;
+      }
+
+      function verificaCamposEmBranco(nome,email,telefone, cidade, uf){
+          var campos = [];
+
+          if(nome == null || nome == ''){
+              campos.push('Campo nome está em branco, por favor preencha-o \n');
+          }else if(email == null || email == ''){
+              campos.push('Campo E-mail está em branco, por favor preencha-o \n');
+          }else if(telefone == null || telefone == ''){
+              campos.push('Campo Telefone está em branco, por favor preencha-o \n');
+          }else if(cidade == null || cidade == ''){
+              campos.push('Campo Cidade está em branco, por favor preencha-o \n');
+          }else if(uf == null || uf == ''){
+              campos.push('Campo UF está em branco, por favor preencha-o \n');
+          }
+
+          return campos;
       }
 
       function error(resposta){
@@ -638,6 +657,16 @@
 
       }
 
+      function limparCamposParceiro(){
+          $("#idnomecompletoParceria").val('');
+          $("#idemailParceria").val('');
+          $("#idtelefoneParceria").val('');
+          $("#idCidadeParceria").val('');
+          $("#idUfParceria").val('');
+          //$("#idplano").val('');
+
+      }
+
       $('#enviarplano').click(function() {
           // variaveis do formulario
 
@@ -686,7 +715,57 @@
           }
       });
 
-      $('#enviarContatoSimples').click(function(){
+      $('#enviarContatoParceria').click(function() {
+          // variaveis do formulario
+
+          var nome = $("#idnomecompletoParceria").val();
+          var email = $("#idemailParceria").val();
+          var telefone = $("#idtelefoneParceria").val();
+          var cidade = $("#idCidadeParceria").val();
+          var uf = $("#idUfParceria").val();
+          //var plano = $("#planoContato").val();
+
+          var aux = [];
+
+          var validaCampos = verificaCamposEmBranco(nome, email, telefone, cidade, uf);
+
+          if (validaCampos.length == 0) {
+              spinner.spin(targetparceria);
+              $("#enviarContatoParceria").prop('disabled', true);
+              $.ajax({
+                  type: 'POST',
+                  url: './email/parceiros.php',
+                  dataType: 'html',
+                  data: {nome: nome, email: email, telefone: telefone, cidade: cidade, uf: uf},
+
+                  success: function (data) {
+                      if (data == '1') {
+                          spinner.stop();
+                          sweetAlert(sucesso());
+                          limparCamposParceiro();
+                          $("#enviarContatoParceria").prop('disabled', false);
+                          $("#exampleModalparceria").modal('toggle');
+                      } else {
+                          spinner.stop();
+                          $("#enviarContatoParceria").prop('disabled', false);
+                          sweetAlert(error(data));
+                      }
+                  }
+              });
+          } else {
+              sweetAlert({
+                  title: 'Alguns campos não foram preenchidos',
+                  text: $.each(validaCampos, function (chave, values) {
+                      return values;
+                  }),
+                  type: 'error',
+                  showConfirmButton: true,
+                  //timer: 1500
+              });
+          }
+      });
+
+      $('#enviarContatoSimples').click(function() {
           // variaveis do formulario
 
           var nome = $("#nomeContato").val();
@@ -696,38 +775,38 @@
 
           var aux = [];
 
-          var validaCampos = verificaCamposEmBranco(nome,email,telefone);
+          var validaCampos = verificaCamposEmBranco(nome, email, telefone);
 
-          if(validaCampos.length == 0) {
+          if (validaCampos.length == 0) {
               spinner.spin(targetContato);
-              $("#enviarContatoSimples").prop('disabled',true);
-              $.ajax( {
+              $("#enviarContatoSimples").prop('disabled', true);
+              $.ajax({
                   type: 'POST',
                   url: './email/contato.php',
                   dataType: 'html',
-                  data : {nome: nome, email: email, telefone: telefone},
+                  data: {nome: nome, email: email, telefone: telefone},
 
                   success: function (data) {
-                      if(data == '1') {
+                      if (data == '1') {
                           spinner.stop();
                           sweetAlert(sucesso());
                           limparCamposContato();
-                          $("#enviarContatoSimples").prop('disabled',false);
-                         //$("#exampleModal1").modal('toggle');
-                      }else{
+                          $("#enviarContatoSimples").prop('disabled', false);
+                          //$("#exampleModal1").modal('toggle');
+                      } else {
                           spinner.stop();
-                          $("#enviarContatoSimples").prop('disabled',false);
+                          $("#enviarContatoSimples").prop('disabled', false);
                           sweetAlert(error(data));
                       }
                   }
               });
-          }else{
+          } else {
               sweetAlert({
                   title: 'Alguns campos não foram preenchidos',
-                  text : $.each(validaCampos,function (chave,  values) {
+                  text: $.each(validaCampos, function (chave, values) {
                       return values;
                   }),
-                  type : 'error',
+                  type: 'error',
                   showConfirmButton: true,
                   //timer: 1500
               });
