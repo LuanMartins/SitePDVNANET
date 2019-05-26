@@ -589,7 +589,7 @@
             return campos;
       }
 
-      function verificaCamposEmBranco(nome,email,telefone, cidade, uf){
+      function verificaCamposEmBrancoParceria(nome,email,telefone, cidade, uf){
           var campos = [];
 
           if(nome == null || nome == ''){
@@ -727,7 +727,7 @@
 
           var aux = [];
 
-          var validaCampos = verificaCamposEmBranco(nome, email, telefone, cidade, uf);
+          var validaCampos = verificaCamposEmBrancoParceria(nome, email, telefone, cidade, uf);
 
           if (validaCampos.length == 0) {
               spinner.spin(targetparceria);
