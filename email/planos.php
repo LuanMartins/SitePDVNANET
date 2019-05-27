@@ -77,7 +77,7 @@ if($_POST) {
         $email->FromName = "PDVNANET";
 
 // email de destinatario
-        $email->AddAddress( $_POST['email'], $_POST['nome'] );
+        $email->AddAddress( "luan_18martins@hotmail.com", $_POST['nome'] );
 
 // mensagem de teste
         $email->Subject = "A Equipe do PDVNANET agradece seu contato " + $_POST['nome'];
@@ -123,9 +123,70 @@ if($_POST) {
         </html>";
 
 
+        //---------- Email para confirmação de envio --------------------//
+
+
+        $emailParceiro = new PHPMailer\PHPMailer\PHPMailer();
+
+        $emailParceiro->isSMTP();
+        $emailParceiro->Host = 'smtp.gmail.com';
+        $emailParceiro->SMTPAuth = true;
+        $emailParceiro->SMTPSecure = 'tls';
+        $emailParceiro->Username = 'contato.pdvnanet@gmail.com';
+        $emailParceiro->Password = 'solucoes@12';
+        $emailParceiro->Port = 587;
+        $emailParceiro->isHTML(true);
+        $emailParceiro->CharSet = 'utf-8';
+
+//  configuraÃ§Ã£o de remetente
+        $emailParceiro->setFrom('contato.pdvnanet@gmail.com');
+        $emailParceiro->FromName = "PDVNANET";
+
+//  email de destinatario
+        $emailParceiro->AddAddress( $_POST['email'], $_POST['nome'] );
+
+// mensagem de t este
+        $emailParceiro->Subject = "A Equipe do PDVNANET agradece seu contato " + $_POST['nome'];
+        $emailParceiro->Body = "<html lang='pt'>
+        <head> 
+          <meta ch arset='UTF-8'>
+            <meta  name='viewport' content='width=device-width, initial-scale=1.0'>
+            <met a http-equiv='X-UA-Compatible' content='ie=edge'>
+        </head> 
+        <body> 
+        <div style='background: #f0f0f0; padding: 20px; '>
+                    <div style='background: white; width: 80%; margin: auto; border: 1px solid rgb(210, 210, 210);'>
+                        <div style='height: 70px; background: #429244;'></div>
+                        <div style='height: 20px; background: #00a2ea'></div>
+                        <div style='width: 500px; margin: auto; margin-top: 10px; margin-bottom: 10px;'>
+                            <h1><center>ATENÇÃO TIME COMERCIAL</center></h1>
+                        </div>
+                        <div style='width: 80%; margin: auto; margin-top: 10px; margin-bottom: 10px;'>
+                            <div style='text-align: justify; margin-top: 20px; margin-bottom: 20px; font-family: Arial; font-size: 15px;'>
+                            <h3></h3>
+                                <h4>recebi a confirmação topzeira</h4>
+                                
+                            < /div>
+                        </div>
+                        <div style='background: white;'>
+                             <div style='width: 300px; margin: auto; margin-top: 10px; margin-bottom: 10px;'>
+                            
+                            </div>
+                        </div>
+                    </div>	
+                </div> 
+        </body> 
+        </html>" ;
+
+        //$email->MsgHTML($mensagem);
+
+        $enviadoParceiro = $emailParceiro->Send();
+
+
+
         $enviado = $email->Send();
 
-        if ($enviado) {
+        if ($enviado && $enviadoParceiro) {
             echo "1";
         } else {
             //$error = PHPMailer\PHPMailer\Exception();
