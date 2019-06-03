@@ -119,7 +119,7 @@ if($_POST) {
                             <h3></h3>
                                 <h4>recebi a confirmação topzeira</h4>
                                 
-                            < /div>
+                            </div>
                         </div>
                         <div style='background: white;'>
                              <div style='width: 300px; margin: auto; margin-top: 10px; margin-bottom: 10px;'>

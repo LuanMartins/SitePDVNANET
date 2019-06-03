@@ -53,8 +53,29 @@ echo envioDeEmail();
 function envioDeEmail($nome,$email,$telefone,$plano)
 {
 }
+
+function convertPlano($plano){
+ if($plano == 1){
+     return 'Básico';
+ }else if($plano == 2){
+     return 'Intermediário';
+ }else if($plano == 3){
+     return 'Completo';
+ }else if($plano == 2){
+     return 'Premium';
+ }
+}
+
 if($_POST) {
     if (strip_tags($_POST['nome']) && strip_tags($_POST['email']) && strip_tags($_POST['telefone']) && strip_tags($_POST['plano'])) {
+
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $telefone = $_POST['telefone'];
+        $plano = $_POST['plano'];
+
+       // echo $email;
+       // die();
 
         $email = new PHPMailer\PHPMailer\PHPMailer();
 
@@ -80,8 +101,8 @@ if($_POST) {
         $email->AddAddress( "luan_18martins@hotmail.com", $_POST['nome'] );
 
 // mensagem de teste
-        $email->Subject = "A Equipe do PDVNANET agradece seu contato " + $_POST['nome'];
-        $email->Body = "<html lang='pt'>
+
+        $corpoMensagem = "<html lang='pt'>
         <head>
           <meta charset='UTF-8'>
             <meta name='viewport' content='width=device-width, initial-scale=1.0'>
@@ -98,18 +119,12 @@ if($_POST) {
                         <div style='width: 80%; margin: auto; margin-top: 10px; margin-bottom: 10px;'>
                             <div style='text-align: justify; margin-top: 20px; margin-bottom: 20px; font-family: Arial; font-size: 15px;'>
                             <h3></h3>
-                                <h4>Data:</h4>
-                                <h4>Horário do planos:</h4>
-                                <h4>Nome: </h4>
-                                <h4>Email: </h4>
-                                <h4>Telefone: </h4>
-                                <h4>Empresa:</h4>
-                                <h4>cargo: </h4>
+                                <h4>Nome:[NOME] </h4>
+                                <h4>Email: [EMAIL]</h4>
+                                <h4>Telefone: [TELEFONE]</h4>
+                                <h4>Plano de Interesse: [PLANO]</h4>
                                 <h3>Atenciosamente,</h3>
-                                <h3>Soluc1one Web System</h3>
-                                <img src='cid:135' width='300px' height='100px'>
-                                <h3>Atenciosamente,</h3>
-                                <h3>Soluc1one Web System</h3>
+                                <h3>SallesPDV</h3>
                             </div>
                         </div>
                         <div style='background: white;'>
@@ -122,6 +137,13 @@ if($_POST) {
         </body>
         </html>";
 
+        $corpoMensagem = str_replace("[NOME]",$nome,$corpoMensagem);
+        //$corpoMensagem = str_replace("[EMAIL]",strval($email),$corpoMensagem);
+        $corpoMensagem = str_replace("[TELEFONE]",$telefone,$corpoMensagem);
+        $corpoMensagem = str_replace("[PLANO]",convertPlano($plano),$corpoMensagem);
+
+        $email->Subject = "A Equipe do PDVNANET agradece seu contato " + $_POST['nome'];
+        $email->Body = $corpoMensagem;
 
         //---------- Email para confirmação de envio --------------------//
 
@@ -159,14 +181,14 @@ if($_POST) {
                         <div style='height: 70px; background: #429244;'></div>
                         <div style='height: 20px; background: #00a2ea'></div>
                         <div style='width: 500px; margin: auto; margin-top: 10px; margin-bottom: 10px;'>
-                            <h1><center>ATENÇÃO TIME COMERCIAL</center></h1>
+                    
                         </div>
                         <div style='width: 80%; margin: auto; margin-top: 10px; margin-bottom: 10px;'>
                             <div style='text-align: justify; margin-top: 20px; margin-bottom: 20px; font-family: Arial; font-size: 15px;'>
                             <h3></h3>
-                                <h4>recebi a confirmação topzeira</h4>
+                                <h4><center>Nossa equipe agradece o contato. Em breve retornaremos</center></h4>
                                 
-                            < /div>
+                            </div>
                         </div>
                         <div style='background: white;'>
                              <div style='width: 300px; margin: auto; margin-top: 10px; margin-bottom: 10px;'>
