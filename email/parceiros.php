@@ -38,7 +38,7 @@ if($_POST) {
         $email->FromName = "PDVNANET";
 
 // email de destinatario
-        $email->AddAddress( "luan_18martins@hotmail.com", $_POST['nome'] );
+        $email->AddAddress( "contato@tecsoft.info", 'teste' );
 
 // mensagem de teste
         $email->Subject = "A Equipe do PDVNANET agradece seu contato " + $_POST['nome'];

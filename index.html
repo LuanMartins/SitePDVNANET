@@ -460,6 +460,12 @@
                 <input type="text" name="emailContato" id="emailContato" placeholder="Email">
               </div>
             </div>
+            <br>
+            <div class="col-md-12">
+              <div class="form-group">
+                <textarea class="form-control" name="assuntoContato" id="assuntoContato" placeholder="Assunto" rows="7"></textarea>
+              </div>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-gradient submit" id="enviarContatoSimples">Subscribe</button>
             </div>
@@ -771,6 +777,7 @@
           var nome = $("#nomeContato").val();
           var email = $("#emailContato").val();
           var telefone = $("#telefoneContato").val();
+          var assunto = $("#assuntoContato").val();
           //var plano = $("#planoContato").val();
 
           var aux = [];
@@ -784,7 +791,7 @@
                   type: 'POST',
                   url: './email/contato.php',
                   dataType: 'html',
-                  data: {nome: nome, email: email, telefone: telefone},
+                  data: {nome: nome, email: email, telefone: telefone, assunto: assunto},
 
                   success: function (data) {
                       if (data == '1') {

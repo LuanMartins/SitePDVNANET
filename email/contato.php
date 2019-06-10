@@ -10,7 +10,7 @@ function envioDeEmail($nome,$email,$telefone,$plano)
 {
 }
 if($_POST) {
-    if (strip_tags($_POST['nome']) && strip_tags($_POST['email']) && strip_tags($_POST['telefone'])) {
+    if (strip_tags($_POST['nome']) && strip_tags($_POST['email']) && strip_tags($_POST['telefone']) && strip_tags($_POST['assunto'])) {
 
         $email = new PHPMailer\PHPMailer\PHPMailer();
 
@@ -31,7 +31,7 @@ if($_POST) {
         $email->FromName = "PDVNANET";
 
 // email de destinatario
-        $email->AddAddress( "luan_18martins@hotmail.com", $_POST['nome'] );
+        $email->AddAddress( "contato@tecsoft.info", 'teste' );
 
 // mensagem de teste
         $email->Subject = "A Equipe do PDVNANET agradece seu contato " + $_POST['nome'];
